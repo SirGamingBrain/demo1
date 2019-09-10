@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -15,12 +16,14 @@ public class CameraFollow : MonoBehaviour
         main = FindObjectOfType<Camera>();
         player = GameObject.FindGameObjectWithTag("Player");
 
-        main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 10, player.transform.position.z);
+        main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 15f, player.transform.position.z);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        main.transform.position = new Vector3((player.transform.position.x + joystick.Horizontal), player.transform.position.y + 10, player.transform.position.z + joystick.Vertical);
+        if (player.GetComponent<PlayerMovement>().alive == true) {
+            main.transform.position = new Vector3((player.transform.position.x + joystick.Horizontal * 2f), player.transform.position.y + 15f, player.transform.position.z + joystick.Vertical * 2f);
+        }
     }
 }
